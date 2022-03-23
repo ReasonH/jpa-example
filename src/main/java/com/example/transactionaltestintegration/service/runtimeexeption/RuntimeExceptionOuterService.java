@@ -1,31 +1,23 @@
-package com.example.transactionaltestintegration.service.exceptionhandling;
+package com.example.transactionaltestintegration.service.runtimeexeption;
 
 import com.example.transactionaltestintegration.entity.Post;
 import com.example.transactionaltestintegration.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class OuterService {
+@RequiredArgsConstructor
+public class RuntimeExceptionOuterService {
     private final NonTransactionalInnerService nonTransactionalInnerService;
     private final TransactionalInnerService transactionalInnerService;
     private final NestedTransactionalInnerService nestedTransactionalInnerService;
     private final NewTransactionalInnerService newTransactionalInnerService;
     private final PostRepository postRepository;
 
-    private static final Logger log = LoggerFactory.getLogger(OuterService.class);
-
-    public OuterService(NonTransactionalInnerService nonTransactionalInnerService, TransactionalInnerService transactionalInnerService,
-                        NestedTransactionalInnerService nestedTransactionalInnerService, NewTransactionalInnerService newTransactionalInnerService,
-                        PostRepository postRepository) {
-        this.nonTransactionalInnerService = nonTransactionalInnerService;
-        this.transactionalInnerService = transactionalInnerService;
-        this.nestedTransactionalInnerService = nestedTransactionalInnerService;
-        this.newTransactionalInnerService = newTransactionalInnerService;
-        this.postRepository = postRepository;
-    }
+    private static final Logger log = LoggerFactory.getLogger(RuntimeExceptionOuterService.class);
 
     @Transactional
     public void nonTransactionalThrowingRuntimeEx() {

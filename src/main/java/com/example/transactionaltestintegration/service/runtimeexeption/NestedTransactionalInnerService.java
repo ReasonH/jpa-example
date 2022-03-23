@@ -1,7 +1,8 @@
-package com.example.transactionaltestintegration.service.exceptionhandling;
+package com.example.transactionaltestintegration.service.runtimeexeption;
 
 import com.example.transactionaltestintegration.entity.Post;
 import com.example.transactionaltestintegration.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(propagation = Propagation.NESTED)
+@RequiredArgsConstructor
 public class NestedTransactionalInnerService {
 
     private final PostRepository postRepository;
     private static final Logger log = LoggerFactory.getLogger(NonTransactionalInnerService.class);
-
-    @Autowired
-    public NestedTransactionalInnerService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
 
     public void innerMethodThrowingRuntimeEx() {
         postRepository.save(new Post("[NESTED Transactional class] innerMethodThrowingRuntimeEx"));

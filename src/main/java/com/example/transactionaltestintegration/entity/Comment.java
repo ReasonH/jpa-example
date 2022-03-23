@@ -1,5 +1,9 @@
 package com.example.transactionaltestintegration.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,42 +12,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Post post;
 
-    private String comment;
+    private String content;
 
-    public Long getId() {
-        return this.id;
-    }
+    private String author;
 
-    public String getComment() {
-        return this.comment;
-    }
-
-    public Post getPost() {
-        return this.post;
-    }
-
-    public void setComment(String title) { this.comment = title; }
-
-    public void setPost(Post post) { this.post = post; }
-
-    public Comment() {
-    }
-
-    public Comment(String title, Post post) {
-        this.comment = title;
-        this.post = post;
+    public Comment(String content, String author) {
+        this.content = content;
+        this.author = author;
     }
 
     @Override
     public String toString() {
-        return getId() + " " + getComment();
+        return getId() + " " + getContent();
     }
 }
