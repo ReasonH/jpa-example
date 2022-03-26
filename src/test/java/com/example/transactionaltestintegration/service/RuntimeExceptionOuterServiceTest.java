@@ -2,7 +2,6 @@ package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.runtimeexeption.RuntimeExceptionOuterService;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,33 +56,33 @@ public class RuntimeExceptionOuterServiceTest {
     }
 
     @Test
-    @DisplayName("런타임 예외를 던지는 @Transactional(REQUIRED_NEW) 메서드 호출")
+    @DisplayName("런타임 예외를 던지는 @Transactional(REQUIRES_NEW) 메서드 호출")
     public void newTransactionalThrowingRuntimeEx() {
         runtimeExceptionOuterService.newTransactionalThrowingRuntimeEx();
-        assertThat(repository.findAll().get(0).getTitle()).isEqualTo("[OUTER SERVICE]");
         assertThat(repository.count()).isEqualTo(1);
+        assertThat(repository.findAll().get(0).getTitle()).isEqualTo("[OUTER SERVICE]");
     }
 
     @Test
-    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(REQUIRED_NEW) 메서드 호출")
+    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(REQUIRES_NEW) 메서드 호출")
     public void newTransactionalCatchingRuntimeEx() {
         runtimeExceptionOuterService.newTransactionalCatchingRuntimeEx();
         assertThat(repository.count()).isEqualTo(2);
     }
 
-    @Test
-    @DisplayName("런타임 예외를 던지는 @Transactional(NESTED) 메서드 호출")
-    @Ignore
-    public void nestedTransactionalThrowingRuntimeEx() {
-        runtimeExceptionOuterService.nestedTransactionalThrowingRuntimeEx();
-        assertThat(repository.count()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(NESTED) 메서드 호출")
-    @Ignore
-    public void nestedTransactionalCatchingRuntimeEx() {
-        runtimeExceptionOuterService.nestedTransactionalCatchingRuntimeEx();
-        assertThat(repository.count()).isEqualTo(1);
-    }
+//    @Test
+//    @DisplayName("런타임 예외를 던지는 @Transactional(NESTED) 메서드 호출")
+//    @Disabled
+//    public void nestedTransactionalThrowingRuntimeEx() {
+//        runtimeExceptionOuterService.nestedTransactionalThrowingRuntimeEx();
+//        assertThat(repository.count()).isEqualTo(1);
+//    }
+//
+//    @Test
+//    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(NESTED) 메서드 호출")
+//    @Disabled
+//    public void nestedTransactionalCatchingRuntimeEx() {
+//        runtimeExceptionOuterService.nestedTransactionalCatchingRuntimeEx();
+//        assertThat(repository.count()).isEqualTo(1);
+//    }
 }

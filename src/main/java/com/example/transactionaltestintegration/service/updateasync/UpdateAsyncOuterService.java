@@ -1,4 +1,4 @@
-package com.example.transactionaltestintegration.service.async;
+package com.example.transactionaltestintegration.service.updateasync;
 
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.repository.CommentRepository;
@@ -55,7 +55,7 @@ public class UpdateAsyncOuterService {
         Comment comment = commentRepository.findById(id).get();
 
         taskExecutor.execute(() -> {
-            updateAsyncInnerService.updateSyncWithTransactional(comment);
+            updateAsyncInnerService.updateSyncWithTx(comment);
         });
         try {
             Thread.sleep(1000);

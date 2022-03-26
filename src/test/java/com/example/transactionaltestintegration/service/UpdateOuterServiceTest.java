@@ -3,12 +3,7 @@ package com.example.transactionaltestintegration.service;
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.repository.CommentRepository;
 import com.example.transactionaltestintegration.service.update.UpdateOuterService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,6 +22,7 @@ public class UpdateOuterServiceTest {
     private CommentRepository commentRepository;
 
     @Nested
+    @DisplayName("caller 함수 Tx, callee 함수 Tx")
     class NonTransactionalOuterMethod {
         @Test
         @DisplayName("내부에서 DB 조회 후 수정하는 경우 DB에 반영된다.")
@@ -52,7 +48,7 @@ public class UpdateOuterServiceTest {
     }
 
     @Nested
-    @DisplayName("외부 함수 @Transactional, 내부 함수 @Transactional(propagation = REQUIRES_NEW)")
+    @DisplayName("caller 함수 Tx, callee 함수 Tx(propagation = REQUIRES_NEW)")
     class TransactionalOuterNewInnerMethod {
 
         @Test
@@ -90,6 +86,5 @@ public class UpdateOuterServiceTest {
             assertThat(comment.getAuthor()).isEqualTo("Park");
             assertThat(comment.getContent()).isEqualTo("[Inner Service Comment]");
         }
-
     }
 }
