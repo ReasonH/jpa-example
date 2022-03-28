@@ -51,15 +51,6 @@ public class UpdateAsyncOuterServiceTest {
 
     @Test
     @Order(4)
-    @DisplayName("스레드에서 호출한 함수가 @Transactional인 경우 새로운 트랜잭션을 시작한다.")
-    public void updateWithTransactionalFunctionInThreadAndWait() {
-        long id = initDBService.initComment().getId();
-        updateAsyncOuterService.updateWithTransactionalFunctionInThreadAndWait(id);
-        assertThat(commentRepository.findById(id).get().getContent()).isEqualTo("[Async Inner Service Comment]");
-    }
-
-    @Test
-    @Order(5)
     @DisplayName("Async 함수에서 업데이트 수행, caller가 비동기 호출을 대기하는 경우 종료되면서 dirty-checking이 동작한다.")
     public void updateWithAsyncFunction() {
         long id = initDBService.initComment().getId();

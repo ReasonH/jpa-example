@@ -4,6 +4,7 @@ import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.runtimeexeption.RuntimeExceptionOuterService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,19 +71,19 @@ public class RuntimeExceptionOuterServiceTest {
         assertThat(repository.count()).isEqualTo(2);
     }
 
-//    @Test
-//    @DisplayName("런타임 예외를 던지는 @Transactional(NESTED) 메서드 호출")
-//    @Disabled
-//    public void nestedTransactionalThrowingRuntimeEx() {
-//        runtimeExceptionOuterService.nestedTransactionalThrowingRuntimeEx();
-//        assertThat(repository.count()).isEqualTo(1);
-//    }
-//
-//    @Test
-//    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(NESTED) 메서드 호출")
-//    @Disabled
-//    public void nestedTransactionalCatchingRuntimeEx() {
-//        runtimeExceptionOuterService.nestedTransactionalCatchingRuntimeEx();
-//        assertThat(repository.count()).isEqualTo(1);
-//    }
+    @Test
+    @DisplayName("런타임 예외를 던지는 @Transactional(NESTED) 메서드 호출")
+    @Disabled
+    public void nestedTransactionalThrowingRuntimeEx() {
+        runtimeExceptionOuterService.nestedTransactionalThrowingRuntimeEx();
+        assertThat(repository.count()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(NESTED) 메서드 호출")
+    @Disabled
+    public void nestedTransactionalCatchingRuntimeEx() {
+        runtimeExceptionOuterService.nestedTransactionalCatchingRuntimeEx();
+        assertThat(repository.count()).isEqualTo(1);
+    }
 }

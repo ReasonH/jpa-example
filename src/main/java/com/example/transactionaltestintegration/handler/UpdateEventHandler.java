@@ -1,10 +1,9 @@
 package com.example.transactionaltestintegration.handler;
 
-import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateEvent;
-import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateIdTxEvent;
+import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateByIdTxEvent;
 import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateTxEvent;
 import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateNonTxEventTxListener;
-import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateTxEventTxListenerWithId;
+import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateByIdTxEventTxListener;
 import com.example.transactionaltestintegration.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -27,7 +26,7 @@ public class UpdateEventHandler {
 
     @EventListener
     @Transactional
-    public void onMyEvent(UpdateIdTxEvent event) {
+    public void onMyEvent(UpdateByIdTxEvent event) {
         commentRepository.findById(event.getComment().getId()).get().setContent(event.getContent());
     }
 
@@ -38,7 +37,7 @@ public class UpdateEventHandler {
 
     @TransactionalEventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void onMyEvent(UpdateTxEventTxListenerWithId event) {
+    public void onMyEvent(UpdateByIdTxEventTxListener event) {
         commentRepository.findById(event.getComment().getId()).get().setContent(event.getContent());
     }
 }

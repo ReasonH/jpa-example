@@ -2,10 +2,10 @@ package com.example.transactionaltestintegration.service.updateevent;
 
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateEvent;
-import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateIdTxEvent;
+import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateByIdTxEvent;
 import com.example.transactionaltestintegration.handler.event.listenerupdate.UpdateTxEvent;
 import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateNonTxEventTxListener;
-import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateTxEventTxListenerWithId;
+import com.example.transactionaltestintegration.handler.event.txlistenerupdate.UpdateByIdTxEventTxListener;
 import com.example.transactionaltestintegration.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -31,7 +31,7 @@ public class UpdateEventOuterService {
 
     public void updateByEventWithIdTx(long id) {
         Comment comment = commentRepository.findById(id).get();
-        eventPublisher.publishEvent(new UpdateIdTxEvent("[Event Service Comment]", comment));
+        eventPublisher.publishEvent(new UpdateByIdTxEvent("[Event Service Comment]", comment));
     }
 
     @Transactional
@@ -43,6 +43,6 @@ public class UpdateEventOuterService {
     @Transactional
     public void updateByTxListenerTxWithId(long id) {
         Comment comment = commentRepository.findById(id).get();
-        eventPublisher.publishEvent(new UpdateTxEventTxListenerWithId("[Event Service Comment]", comment));
+        eventPublisher.publishEvent(new UpdateByIdTxEventTxListener("[Event Service Comment]", comment));
     }
 }

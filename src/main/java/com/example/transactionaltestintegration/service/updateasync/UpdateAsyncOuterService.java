@@ -51,18 +51,6 @@ public class UpdateAsyncOuterService {
     }
 
     @Transactional
-    public void updateWithTransactionalFunctionInThreadAndWait(long id) {
-        Comment comment = commentRepository.findById(id).get();
-
-        taskExecutor.execute(() -> {
-            updateAsyncInnerService.updateSyncWithTx(comment);
-        });
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {}
-    }
-
-    @Transactional
     public void updateWithAsyncFunction(long id) {
         Comment comment = commentRepository.findById(id).get();
 

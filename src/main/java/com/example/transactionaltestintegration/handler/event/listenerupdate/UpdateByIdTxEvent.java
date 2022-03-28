@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UpdateIdTxEvent {
+public class UpdateByIdTxEvent {
     private String content;
     private Comment comment;
 }
