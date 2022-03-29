@@ -1,7 +1,9 @@
 package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.repository.CommentRepository;
+import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.updateasync.UpdateAsyncOuterService;
+import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,14 @@ public class UpdateAsyncOuterServiceTest {
     private InitDBService initDBService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @AfterEach
+    void clear() {
+        commentRepository.deleteAllInBatch();
+        postRepository.deleteAllInBatch();
+    }
 
     @Test
     @Order(1)

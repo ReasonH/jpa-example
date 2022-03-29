@@ -2,6 +2,7 @@ package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.repository.CommentRepository;
+import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.updateevent.UpdateEventOuterService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,14 @@ public class UpdateEventOuterServiceTest {
     private UpdateEventOuterService updateEventOuterService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @AfterEach
+    void clear() {
+        commentRepository.deleteAllInBatch();
+        postRepository.deleteAllInBatch();
+    }
 
     @Nested
     @DisplayName("동기식 @EventListenr")

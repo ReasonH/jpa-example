@@ -39,6 +39,11 @@ public class LazyLoadingEventOuterService {
     public void asyncTxLazyLoadingTxEvent(long id) {
         Post post = postRepository.findById(id).get();
         eventPublisher.publishEvent(new LazyAsyncTxListenerTx(post));
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+
+        }
     }
 
 }

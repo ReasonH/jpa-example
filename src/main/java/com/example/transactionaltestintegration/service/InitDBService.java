@@ -9,6 +9,7 @@ import com.example.transactionaltestintegration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -35,6 +36,7 @@ public class InitDBService {
     public Post initPost() {
         User user = userRepository.save(new User("[Init User]"));
         Post post = postRepository.save(new Post("[Init Post]"));
+        post.setContent("[Init Content]");
         post.setUser(user);
 
         return post;

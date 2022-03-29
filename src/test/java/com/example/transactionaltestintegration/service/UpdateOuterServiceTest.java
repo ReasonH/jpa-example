@@ -2,6 +2,7 @@ package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.repository.CommentRepository;
+import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.update.UpdateOuterService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UpdateOuterServiceTest {
+
     @Autowired
     private UpdateOuterService updateOuterService;
     @Autowired
     private InitDBService initDBService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @AfterEach
+    void clear() {
+        commentRepository.deleteAllInBatch();
+        postRepository.deleteAllInBatch();
+    }
 
     @Nested
     @DisplayName("caller 함수 Tx, callee 함수 Tx")
