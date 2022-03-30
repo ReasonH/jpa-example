@@ -24,4 +24,32 @@ public class FirstCacheService {
 
         postRepository.save(newPost);
     }
+
+    @Transactional
+    public void updateUniqueColumnAndEarlySaveOldAndSaveNew(long id) {
+        Post post = postRepository.findById(id).get();
+        String content = post.getContent();
+        post.setTitle("[Post]");
+        post.setContent("[Content]");
+        postRepository.save(post);
+
+        Post newPost = new Post("[New Post]");
+        newPost.setContent(content);
+
+        postRepository.save(newPost);
+    }
+
+    @Transactional
+    public void updateUniqueColumnAndEarlySaveFlushOldAndSaveNew(long id) {
+        Post post = postRepository.findById(id).get();
+        String content = post.getContent();
+        post.setTitle("[Post]");
+        post.setContent("[Content]");
+        postRepository.saveAndFlush(post);
+
+        Post newPost = new Post("[New Post]");
+        newPost.setContent(content);
+
+        postRepository.save(newPost);
+    }
 }

@@ -62,7 +62,7 @@ public class UpdateOuterServiceTest {
     class TransactionalOuterNewInnerMethod {
 
         @Test
-        @DisplayName("외부에서 조회, 내부에서 객체 조회 및 수정, 외부에서 객체 수정하면, dirty-checking에 의해 외부 객체 상태가 DB에 반영된다.")
+        @DisplayName("부모에서 조회, 자식에서 객체 조회 및 수정, 부모에서 객체 수정하면, dirty-checking에 의해 부모 객체 상태가 DB에 반영된다.")
         @Order(3)
         public void updateByIdWithRequiresNewAndUpdateOutside() {
             long id = initDBService.initComment().getId();
@@ -74,7 +74,7 @@ public class UpdateOuterServiceTest {
         }
 
         @Test
-        @DisplayName("외부에서 조회, 내부에서 전달받은 객체 수정, 외부에서 객체 수정하면, dirty-checking에 의해 최종 객체 상태가 DB에 반영된다.")
+        @DisplayName("부모에서 조회, 자식에서 전달받은 객체 수정, 부모에서 객체 수정하면, dirty-checking에 의해 최종 객체 상태가 DB에 반영된다.")
         @Order(4)
         public void updateByEntityAndUpdateOutside() {
             long id = initDBService.initComment().getId();
@@ -86,7 +86,7 @@ public class UpdateOuterServiceTest {
         }
 
         @Test
-        @DisplayName("내부에서 객체 조회 및 수정 후 반환, 외부에서 해당 객체 수정하면, dirty-checking 미동작, 내부 함수 객체 상태가 DB에 반영된다.")
+        @DisplayName("자식에서 객체 조회 및 수정 후 부모로 반환해서 재수정하면, dirty-checking 미동작, 내부 객체 상태가 DB에 반영된다.")
         @Order(5)
         public void updateByIdAndGetEntityAndUpdateOutside() {
             long id = initDBService.initComment().getId();

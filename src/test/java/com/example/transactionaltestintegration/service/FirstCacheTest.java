@@ -74,13 +74,37 @@ public class FirstCacheTest {
         assertThat(postRepository.findByTitle("[Post]")).isNotNull();
     }
 
-    @Test
-    @DisplayName("JPQL 쓰기 작업 시, 변경 감지는 insert 구문 이후(커밋 직전) 작동한다. 즉, 기존의 Unique 값을 활용한 새 엔티티 생성은 불가하다.")
-    @Order(3)
-    public void foo3() {
-        Long id = initDBService.initPost().getId();
-        assertThatThrownBy(() -> firstCacheService.updateUniqueColumnAndSaveNewEntity(id))
-                .isInstanceOf(DataIntegrityViolationException.class);
+    @Nested
+    @DisplayName("객체 A의 유니크 값 a를 b로 수정, a를 이용한 새로운 객체 B를 만들어서 save")
+    class FlushAndJPQL {
+        @Test
+        @DisplayName("update 쿼리가 insert 쿼리 이후에 수행되므로 실패한다.")
+        @Order(3)
+        public void foo3() {
+            Long id = initDBService.initPost().getId();
+            assertThatThrownBy(() -> firstCacheService.updateUniqueColumnAndSaveNewEntity(id))
+                    .isInstanceOf(DataIntegrityViolationException.class);
+        }
+
+        @Test
+        @DisplayName("기존 객체 수정 후 save 호출, commit 시점에 update 쿼리로 수행되므로 실패한다.")
+        @Order(4)
+        public void foo4() {
+            Long id = initDBService.initPost().getId();
+            assertThatThrownBy(() -> firstCacheService.updateUniqueColumnAndEarlySaveOldAndSaveNew(id))
+                    .isInstanceOf(DataIntegrityViolationException.class);
+        }
+
+        @Test
+        @DisplayName("기존 객체 수정 후 saveAndFlush 호출, update가 미리 반영된다.")
+        @Order(5)
+        public void foo5() {
+            Long id = initDBService.initPost().getId();
+            firstCacheService.updateUniqueColumnAndEarlySaveFlushOldAndSaveNew(id);
+
+            assertThat(postRepository.findAll().size()).isEqualTo(2);
+        }
     }
+
 }
 
