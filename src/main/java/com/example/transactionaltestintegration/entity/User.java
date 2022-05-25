@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Post> postList = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     public User(String name) {
         this.name = name;
