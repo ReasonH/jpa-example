@@ -42,7 +42,7 @@ public class LazyLoadingEventOuterServiceTest {
     }
 
     @Nested
-    @DisplayName("@TxEventListener 지연로딩 테스트, caller는 Tx")
+    @DisplayName("@TxEventListener 지연로딩 테스트")
     class TxEventListenerLazyLoading {
 
         @Order(2)

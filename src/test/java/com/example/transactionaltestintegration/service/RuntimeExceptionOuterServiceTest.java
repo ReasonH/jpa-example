@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
-public class RuntimeExceptionOuterServiceTest {
+class RuntimeExceptionOuterServiceTest {
     @Autowired
     private RuntimeExceptionOuterService runtimeExceptionOuterService;
     @Autowired

@@ -23,6 +23,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    private Category category;
+
     public Post(String title) {
         this.title = title;
     }

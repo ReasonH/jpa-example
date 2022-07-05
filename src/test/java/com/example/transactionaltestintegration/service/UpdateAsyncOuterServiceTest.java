@@ -8,13 +8,14 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UpdateAsyncOuterServiceTest {
+class UpdateAsyncOuterServiceTest {
 
     @Autowired
     private UpdateAsyncOuterService updateAsyncOuterService;
@@ -43,7 +44,7 @@ public class UpdateAsyncOuterServiceTest {
 
     @Test
     @Order(2)
-    @DisplayName("스레드가 영속성 객체를 수정하는 함수를 호출, 영속성 컨텍스트가 전파되지 않으며, 내부에선 dirty-checking이 이루어지지 않는다.")
+    @DisplayName("스레드가 영속성 객체를 수정하는 함수를 호출 후 종료, 스레드엔 영속성 컨텍스트가 전파되지 않는다.")
     public void updateWithFunctionInThread() {
         long id = initDBService.initComment().getId();
         updateAsyncOuterService.updateWithFunctionInThread(id);
@@ -52,7 +53,7 @@ public class UpdateAsyncOuterServiceTest {
 
     @Test
     @Order(3)
-    @DisplayName("스레드가 영속성 객체를 수정하는 함수를 호출, caller가 스레드를 대기한다면 caller 종료 시점에 dirty-checking이 동작한다.")
+    @DisplayName("스레드가 영속성 객체를 수정하는 함수를 호출 후 대기, 종료 시점에 dirty-checking이 동작한다.")
     public void updateWithFunctionInThreadAndWait() {
         long id = initDBService.initComment().getId();
         updateAsyncOuterService.updateWithFunctionInThreadAndWait(id);

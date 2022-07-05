@@ -14,8 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UpdateOuterServiceTest {
-
+class UpdateOuterServiceTest {
     @Autowired
     private UpdateOuterService updateOuterService;
     @Autowired
