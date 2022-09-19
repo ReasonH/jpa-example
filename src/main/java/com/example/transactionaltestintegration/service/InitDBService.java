@@ -2,9 +2,11 @@ package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.entity.Comment;
 import com.example.transactionaltestintegration.entity.Post;
+import com.example.transactionaltestintegration.entity.Sector;
 import com.example.transactionaltestintegration.entity.User;
 import com.example.transactionaltestintegration.repository.CommentRepository;
 import com.example.transactionaltestintegration.repository.PostRepository;
+import com.example.transactionaltestintegration.repository.SectorRepository;
 import com.example.transactionaltestintegration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +23,10 @@ public class InitDBService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final SectorRepository sectorRepository;
 
     @Transactional
-    public Comment initComment() {
+    public Comment initCommentAndPost() {
         Post post = postRepository.save(new Post("[Init Post]"));
 
         Comment comment = new Comment("[Init Comment]", "Lee");
@@ -34,7 +37,7 @@ public class InitDBService {
     }
 
     @Transactional
-    public Post initPost() {
+    public Post initPostAndUser() {
         User user = userRepository.save(new User("[Init User]"));
         Post post = postRepository.save(new Post("[Init Post]"));
         post.setContent("[Init Content]");
@@ -44,7 +47,7 @@ public class InitDBService {
     }
 
     @Transactional
-    public Comment init() {
+    public Comment initCommentAndPostAndUser() {
         User user = userRepository.save(new User("[Init User]"));
         Post post = postRepository.save(new Post("[Init Post]"));
         post.setUser(user);
@@ -53,8 +56,25 @@ public class InitDBService {
         comment.setPost(post);
         commentRepository.save(comment);
 
-        log.info("hashcode COMMENT: {}, POST: {}", comment.hashCode(), post.hashCode());
-        log.info("title: {}, comment: {}", post.getTitle(), comment.getContent());
         return comment;
+    }
+
+    @Transactional
+    public long initPostAndSectorAndUser() {
+        User user = userRepository.save(new User("[Init User]"));
+        Sector sector1 = sectorRepository.save(new Sector("[Sector 1]"));
+        Sector sector2 = sectorRepository.save(new Sector("[Sector 1]"));
+
+        Post post1 = new Post("[Init Post 1]");
+        post1.setUser(user);
+        post1.setSector(sector1);
+        postRepository.save(post1);
+
+        Post post2 = new Post("[Init Post 2]");
+        post2.setUser(user);
+        post2.setSector(sector2);
+        postRepository.save(post2);
+
+        return user.getId();
     }
 }

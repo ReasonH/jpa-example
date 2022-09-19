@@ -1,4 +1,4 @@
-package com.example.transactionaltestintegration.service.lazyloading;
+package com.example.transactionaltestintegration.service.fetch;
 
 import com.example.transactionaltestintegration.entity.Post;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyAsyncListener;

@@ -23,6 +23,10 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "sector_id")
+    private Sector sector;
+
     public Post(String title) {
         this.title = title;
     }
