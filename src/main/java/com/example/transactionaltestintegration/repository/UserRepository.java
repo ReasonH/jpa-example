@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select distinct u from User u join fetch u.postList")
     List<User> findAllByJoinFetch();
+
+    Optional<User> findByName(String name);
 }

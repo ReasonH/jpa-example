@@ -1,4 +1,4 @@
-package com.example.transactionaltestintegration.service.lazyloading;
+package com.example.transactionaltestintegration.service.entityloading;
 
 import com.example.transactionaltestintegration.entity.Post;
 import com.example.transactionaltestintegration.entity.User;
@@ -12,20 +12,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class LazyLoadingInnerService {
+public class OneToManyLazyLoadingService {
 
-    private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @Transactional
-    public Post getPost(Long id) {
-        return postRepository.findById(id).get();
+    public void foo(long id) {
+        User findUser = userRepository.findById(id).get();
+        List<Post> postList = findUser.getPostList();
+        for (Post post : postList) {
+            System.out.println(post.getTitle());
+        }
     }
 
     @Transactional
-    public List<Post> getUserPostList(Long id) {
-        User user = userRepository.findById(id).get();
-        user.getPostList().size();
-        return user.getPostList();
+    public String foo2(long postId) {
+        Post post = postRepository.findById(postId).get();
+        return post.getUser().getName();
     }
 }

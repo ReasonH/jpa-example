@@ -1,11 +1,11 @@
-package com.example.transactionaltestintegration.service.lazyloading;
+package com.example.transactionaltestintegration.service.entityloading;
 
-import com.example.transactionaltestintegration.entity.Post;
+import com.example.transactionaltestintegration.entity.PostForLazy;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyAsyncListener;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyAsyncTxListenerTx;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyTxListener;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyTxListenerTx;
-import com.example.transactionaltestintegration.repository.PostRepository;
+import com.example.transactionaltestintegration.repository.PostForLazyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -16,28 +16,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class LazyLoadingEventOuterService {
 
     private final ApplicationEventPublisher eventPublisher;
-    private final PostRepository postRepository;
+    private final PostForLazyRepository postForLazyRepository;
 
     public void asyncLazyLoadingEvent(long id) {
-        Post post = postRepository.findById(id).get();
+        PostForLazy post = postForLazyRepository.findById(id).get();
         eventPublisher.publishEvent(new LazyAsyncListener(post));
     }
 
     @Transactional
     public void lazyLoadingTxEvent(long id) {
-        Post post = postRepository.findById(id).get();
+        PostForLazy post = postForLazyRepository.findById(id).get();
         eventPublisher.publishEvent(new LazyTxListener(post));
     }
 
     @Transactional
     public void txLazyLoadingTxEvent(long id) {
-        Post post = postRepository.findById(id).get();
+        PostForLazy post = postForLazyRepository.findById(id).get();
         eventPublisher.publishEvent(new LazyTxListenerTx(post));
     }
 
     @Transactional
     public void asyncTxLazyLoadingTxEvent(long id) {
-        Post post = postRepository.findById(id).get();
+        PostForLazy post = postForLazyRepository.findById(id).get();
         eventPublisher.publishEvent(new LazyAsyncTxListenerTx(post));
         try {
             Thread.sleep(3000);

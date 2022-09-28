@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class PostForLazy {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -19,18 +19,15 @@ public class Post {
     @Column(unique = true)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    private Category category;
 
     @OneToOne
     @JoinColumn(name = "sector_id")
     private Sector sector;
 
-    public Post(String title) {
+    public PostForLazy(String title) {
         this.title = title;
     }
 

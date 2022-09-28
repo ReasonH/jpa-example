@@ -19,13 +19,13 @@ public class UpdateOuterService {
     private static final Logger log = LoggerFactory.getLogger(UpdateOuterService.class);
 
     public long updateById() {
-        Comment comment = initDBService.initComment();
+        Comment comment = initDBService.initCommentAndPost();
 
         return updateInnerService.updateByIdAndGetId(comment.getId());
     }
 
     public long updateByEntity() {
-        Comment comment = initDBService.initComment();
+        Comment comment = initDBService.initCommentAndPost();
 
         return updateInnerService.updateByEntityAndGetId(comment);
     }

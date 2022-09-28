@@ -31,6 +31,7 @@ public class UpdateEventHandler {
     }
 
     @TransactionalEventListener
+    @Transactional
     public void onMyEvent(UpdateNonTxEventTxListener event) {
         event.getComment().setContent(event.getContent());
     }

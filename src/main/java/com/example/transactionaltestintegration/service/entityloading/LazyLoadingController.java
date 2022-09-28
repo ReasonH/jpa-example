@@ -1,6 +1,6 @@
-package com.example.transactionaltestintegration.service.lazyloading;
+package com.example.transactionaltestintegration.service.entityloading;
 
-import com.example.transactionaltestintegration.entity.Post;
+import com.example.transactionaltestintegration.entity.PostForLazy;
 import com.example.transactionaltestintegration.service.InitDBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +15,8 @@ public class LazyLoadingController {
 
     @GetMapping("/osiv")
     public String lazyLoadingController() {
-        Post post = initDBService.initPost();
-        Post findPost = lazyLoadingInnerService.getPost(post.getId());
+        PostForLazy post = initDBService.initPostForLazyAndUser();
+        PostForLazy findPost = lazyLoadingInnerService.getPost(post.getId());
         return findPost.getUser().getName();
     }
 }

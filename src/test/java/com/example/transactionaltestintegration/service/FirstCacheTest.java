@@ -34,6 +34,7 @@ public class FirstCacheTest {
     @AfterEach
     void clear() {
         postRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
     @Test
@@ -81,7 +82,7 @@ public class FirstCacheTest {
         @DisplayName("update 쿼리가 insert 쿼리 이후에 수행되므로 실패한다.")
         @Order(3)
         public void foo3() {
-            Long id = initDBService.initPost().getId();
+            Long id = initDBService.initPostAndUser().getId();
             assertThatThrownBy(() -> firstCacheService.updateUniqueColumnAndSaveNewEntity(id))
                     .isInstanceOf(DataIntegrityViolationException.class);
         }
@@ -90,7 +91,7 @@ public class FirstCacheTest {
         @DisplayName("기존 객체 수정 후 save 호출, commit 시점에 update 쿼리로 수행되므로 실패한다.")
         @Order(4)
         public void foo4() {
-            Long id = initDBService.initPost().getId();
+            Long id = initDBService.initPostAndUser().getId();
             assertThatThrownBy(() -> firstCacheService.updateUniqueColumnAndEarlySaveOldAndSaveNew(id))
                     .isInstanceOf(DataIntegrityViolationException.class);
         }
@@ -99,7 +100,7 @@ public class FirstCacheTest {
         @DisplayName("기존 객체 수정 후 saveAndFlush 호출, update가 미리 반영된다.")
         @Order(5)
         public void foo5() {
-            Long id = initDBService.initPost().getId();
+            Long id = initDBService.initPostAndUser().getId();
             firstCacheService.updateUniqueColumnAndEarlySaveFlushOldAndSaveNew(id);
 
             assertThat(postRepository.findAll().size()).isEqualTo(2);

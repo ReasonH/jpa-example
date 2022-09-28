@@ -1,9 +1,11 @@
 package com.example.transactionaltestintegration.handler;
 
+import com.example.transactionaltestintegration.entity.User;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyAsyncListener;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyAsyncTxListenerTx;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyTxListener;
 import com.example.transactionaltestintegration.handler.event.lazyloading.LazyTxListenerTx;
+import com.example.transactionaltestintegration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class LazyLoadingEventHandler {
     private static final Logger log = LoggerFactory.getLogger(LazyLoadingEventHandler.class);
 
+    private final UserRepository userRepository;
     @EventListener
     @Async
     public void onMyEvent(LazyAsyncListener event) {
@@ -32,7 +35,9 @@ public class LazyLoadingEventHandler {
     @TransactionalEventListener
     @Transactional
     public void onMyEvent(LazyTxListenerTx event) {
-        event.getPost().getUser().getName();
+        User user = event.getPost().getUser();
+        user.setName("[New User]");
+        userRepository.save(user);
     }
 
     @TransactionalEventListener
