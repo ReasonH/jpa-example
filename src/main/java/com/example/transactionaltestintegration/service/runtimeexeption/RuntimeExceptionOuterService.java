@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class RuntimeExceptionOuterService {
     private final NonTransactionalInnerService nonTransactionalInnerService;
     private final TransactionalInnerService transactionalInnerService;
-    private final NestedTransactionalInnerService nestedTransactionalInnerService;
     private final NewTransactionalInnerService newTransactionalInnerService;
     private final PostRepository postRepository;
 
@@ -74,26 +73,6 @@ public class RuntimeExceptionOuterService {
         try {
             postRepository.save(new Post("[OUTER SERVICE]"));
             newTransactionalInnerService.innerMethodCatchingRuntimeEx();
-        } catch (RuntimeException ex) {
-            log.warn("OuterService caught exception at outer. ex:{}", ex.getMessage());
-        }
-    }
-
-    @Transactional
-    public void nestedTransactionalThrowingRuntimeEx() {
-        try {
-            postRepository.save(new Post("[OUTER SERVICE]"));
-            nestedTransactionalInnerService.innerMethodThrowingRuntimeEx();
-        } catch (RuntimeException ex) {
-            log.warn("OuterService caught exception at outer. ex:{}", ex.getMessage());
-        }
-    }
-
-    @Transactional
-    public void nestedTransactionalCatchingRuntimeEx() {
-        try {
-            postRepository.save(new Post("[OUTER SERVICE]"));
-            nestedTransactionalInnerService.innerMethodCatchingRuntimeEx();
         } catch (RuntimeException ex) {
             log.warn("OuterService caught exception at outer. ex:{}", ex.getMessage());
         }

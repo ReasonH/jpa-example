@@ -115,7 +115,7 @@ public class LoadingTest {
         }
 
         @Test
-        @DisplayName("loading 대상이 없는 경우? (테스트를 위해, 자동 생성되는 외래키 인덱스 제거 필요...")
+        @DisplayName("loading 대상이 없는 경우? (테스트를 위해, 자동 생성되는 외래키 인덱스 제거 필요)")
         @Disabled
         public void test4() {
             Post post = initDBService.initPostAndUser();

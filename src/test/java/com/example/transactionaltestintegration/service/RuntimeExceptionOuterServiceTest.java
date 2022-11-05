@@ -2,9 +2,10 @@ package com.example.transactionaltestintegration.service;
 
 import com.example.transactionaltestintegration.repository.PostRepository;
 import com.example.transactionaltestintegration.service.runtimeexeption.RuntimeExceptionOuterService;
-import org.aspectj.lang.annotation.After;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -67,21 +68,5 @@ class RuntimeExceptionOuterServiceTest {
     public void newTransactionalCatchingRuntimeEx() {
         runtimeExceptionOuterService.newTransactionalCatchingRuntimeEx();
         assertThat(postRepository.count()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("런타임 예외를 던지는 @Transactional(NESTED) 메서드 호출")
-    @Disabled
-    public void nestedTransactionalThrowingRuntimeEx() {
-        runtimeExceptionOuterService.nestedTransactionalThrowingRuntimeEx();
-        assertThat(postRepository.count()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("런타임 예외를 내부에서 처리하는 @Transactional(NESTED) 메서드 호출")
-    @Disabled
-    public void nestedTransactionalCatchingRuntimeEx() {
-        runtimeExceptionOuterService.nestedTransactionalCatchingRuntimeEx();
-        assertThat(postRepository.count()).isEqualTo(1);
     }
 }
