@@ -7,11 +7,9 @@ import com.example.transactionaltestintegration.service.update.UpdateOuterServic
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UpdateOuterServiceTest {
@@ -73,7 +71,7 @@ class UpdateOuterServiceTest {
         }
 
         @Test
-        @DisplayName("부모에서 조회, 자식에서 전달받은 객체 수정, 부모에서 객체 수정하면, dirty-checking에 의해 최종 객체 상태가 DB에 반영된다.")
+        @DisplayName("부모에서 조회 후 전달, 자식에서 전달받은 객체 수정, 부모에서 객체 수정하면, dirty-checking에 의해 최종 객체 상태가 DB에 반영된다.")
         @Order(4)
         public void updateByEntityAndUpdateOutside() {
             long id = initDBService.initCommentAndPost().getId();

@@ -6,11 +6,9 @@ import com.example.transactionaltestintegration.service.updateasync.UpdateAsyncO
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UpdateAsyncOuterServiceTest {
